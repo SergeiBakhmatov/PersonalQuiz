@@ -9,15 +9,20 @@ import UIKit
 
 final class ResultViewController: UIViewController {
     
-    var result: Animal!
+    @IBOutlet var resultLabel: UILabel!
+    @IBOutlet var definitionLabel: UILabel!
     
     var answersChosen: [Answer]!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.hidesBackButton.toggle()
         
-       result = getResult(for: answersChosen)
+        let result = getResult(for: answersChosen)
+        
+        resultLabel.text = "Вы - \(result.rawValue)"
+        definitionLabel.text = result.definition
         
     }
     
@@ -45,11 +50,11 @@ private extension ResultViewController {
         answerRabbit = answersChosen.filter { $0.animal == .rabbit }
         answerTurtle = answersChosen.filter { $0.animal == .turtle }
         
-        if answerCats.count <= answerDogs.count {
+        if answerCats.count < answerDogs.count {
             result = .dog
-        } else if answerDogs.count <= answerRabbit.count {
+        } else if answerDogs.count < answerRabbit.count {
             result = .rabbit
-        } else if answerRabbit.count <= answerTurtle.count {
+        } else if answerRabbit.count < answerTurtle.count {
             result = .turtle
         } else {
             result = .cat
